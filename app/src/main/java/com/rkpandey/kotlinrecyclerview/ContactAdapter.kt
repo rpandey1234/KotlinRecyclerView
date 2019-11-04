@@ -1,6 +1,7 @@
 package com.rkpandey.kotlinrecyclerview
 
 import android.content.Context
+import android.content.res.Configuration
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,11 @@ class ContactAdapter(private val context: Context, private val contacts: List<Co
         fun bind(contact: Contact) {
             itemView.tvName.text = contact.name
             itemView.tvAge.text = "Age: ${contact.age}"
-            Glide.with(context).load(contact.imageUrl).into(itemView.ivProfile)
+            var imageUrl = contact.imageUrl
+            if (context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                imageUrl = contact.landscapeImageUrl
+            }
+            Glide.with(context).load(imageUrl).into(itemView.ivProfile)
         }
     }
 }
